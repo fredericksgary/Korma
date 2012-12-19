@@ -121,6 +121,18 @@
     (swap! *bound-params* conj v))
   "?")
 
+(defn- array?
+  [ob]
+  (.isArray (class ob)))
+
+(defn array-str
+  [arr]
+  ;; We put the values in as literals. I don't think paramerization will work
+  ;; here, probably because of the single-quotes.
+  ;;
+  ;; There's another array syntax that might be worth looking into.
+  (str "'{" (utils/comma arr) "}'"))
+
 (defn str-value [v]
   (cond
     (map? v) (map-val v)
@@ -128,6 +140,7 @@
     (nil? v) "NULL"
     (true? v) "TRUE"
     (false? v) "FALSE"
+    (array? v) (array-str v)
     (coll? v) (coll-str v)
     :else (parameterize v)))
 
