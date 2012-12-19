@@ -1,5 +1,5 @@
-(defproject korma "0.3.0-beta12"
-  :description "Tasty SQL for Clojure"
+(defproject com.gfredericks/korma "0.3.0-beta11"
+  :description "Tasty SQL for Clojure; forked and added sort of postgres array support."
   :url "http://github.com/ibdknox/korma"
   :dependencies [[org.clojure/clojure "1.3.0"]
                  [c3p0/c3p0 "0.9.1.2"]
