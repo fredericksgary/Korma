@@ -127,11 +127,11 @@
 
 (defn array-str
   [arr]
-  ;; We put the values in as literals. I don't think paramerization will work
-  ;; here, probably because of the single-quotes.
-  ;;
-  ;; There's another array syntax that might be worth looking into.
-  (str "'{" (utils/comma arr) "}'"))
+  (if (empty? arr)
+    ;; Postgres won't allow the ARRAY[] syntax for an empty array, complaining
+    ;; about not knowing the type. Somehow '{}' isn't a problem. :/
+    "'{}'"
+    (str "ARRAY[" (utils/comma (map str-value arr)) "]")))
 
 (defn str-value [v]
   (cond
