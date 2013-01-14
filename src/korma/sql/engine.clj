@@ -127,15 +127,28 @@
     (swap! *bound-params* conj v))
   "?")
 
-(defn str-value [v]
-  (cond
-    (map? v) (map-val v)
-    (keyword? v) (field-str v)
-    (nil? v) "NULL"
-    (true? v) "TRUE"
-    (false? v) "FALSE"
-    (coll? v) (coll-str v)
-    :else (parameterize v)))
+(defprotocol IStrValue
+  (str-value [v]))
+
+(extend-protocol IStrValue
+
+  clojure.lang.IPersistentMap
+  (str-value [v] (map-val v))
+
+  clojure.lang.Keyword
+  (str-value [v] (field-str v))
+
+  nil
+  (str-value [_] "NULL")
+
+  Boolean
+  (str-value [v] (if v "TRUE" "FALSE"))
+
+  clojure.lang.IPersistentCollection
+  (str-value [v] (coll-str v))
+
+  Object
+  (str-value [v] (parameterize v)))
 
 (defn not-nil? [& vs]
   (every? #(not (nil? %)) vs))
