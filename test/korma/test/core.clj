@@ -609,3 +609,14 @@
                                                                         :c 3})))
                                            (order :a)))))))
 
+(defentity foos-abc-2)
+
+(defentity foos-abc-1
+  (has-many foos-abc-2)
+  (transform #(assoc % :bar :baz)))
+
+;; Tests that transform functions work correctly with (with ...)
+(deftest transform-fn-test
+  (with-redefs [do-query (constantly [{:id 12}])]
+    (is (= [{:id 12, :bar :baz, :foos-abc-2 [{:id 12}]}]
+           (select foos-abc-1 (with foos-abc-2))))))
