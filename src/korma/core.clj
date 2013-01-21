@@ -437,7 +437,7 @@
     results
     (if-let [trans (seq (-> query :ent :transforms))]
       (let [trans-fn (apply comp trans)]
-        (if (vector? results) (map trans-fn results) (trans-fn results)))
+        (if (sequential? results) (map trans-fn results) (trans-fn results)))
       results)))
 
 (defn- apply-prepares
