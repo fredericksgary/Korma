@@ -1,6 +1,6 @@
-(defproject korma "0.3.0-RC2"
-  :description "Tasty SQL for Clojure"
-  :url "http://github.com/ibdknox/korma"
+(defproject com.gfredericks/korma "0.3.0-RC2-p1"
+  :description "Tasty SQL for Clojure (gfredericks fork)"
+  :url "http://github.com/fredericksgary/korma"
   :mailing-list {:name "Korma Google Group"
                  :subscribe "https://groups.google.com/group/sqlkorma"}
   :codox {:exclude [korma.sql.engine
